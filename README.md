@@ -1,4 +1,4 @@
-* EXCERPT from Wikipedia
+# EXCERPT from Wikipedia
 
 An Identicon is a visual representation of a hash value, usually of the
 IP address, serving to identify a user of a computer system. The
@@ -12,8 +12,17 @@ only numbers and more importantly, it maintains the person's privacy.
 The Identicon graphic is unique since it's based on the users IP, but
 it is not possible to recover the IP by looking at the Identicon.
 
+## About this project
 
-* ABOUT PHP-Identicons
+
+
+
+## ABOUT PHP-Identicons
+
+
+The original code was taken from here:
+
+[http://sourceforge.net/projects/identicons/](http://sourceforge.net/projects/identicons/)
 
 PHP-Identicons is a lightweight PHP implementation of Don Park's
 original identicon code for visual representation of MD5 hash values.
@@ -23,43 +32,34 @@ The code can be used to generate unique identicons, avatars, and
 system-assigned images based on a user's e-mail address, user ID, etc.
 
 
-* INSTALLATION
+## INSTALLATION
 
-Simply save identicon.php somewhere accessible thru a Web URL.
-
-
-* USAGE
-
-PHP-Identicons requires the size (in pixels) and an MD5 hash of
-anything that will uniquely identify a user - usually an e-mail address
-or a user ID. You can also use MD5 hashes of IP addresses, but bear in
-mind that NATed endpoints will usually have the same IP.
-
-Insert the URL in your HTML image tag that looks something like:
-
-<img src="path/to/identicon.php?size=48&hash=e4d909c290d0fb1ca068ffaddf22cbd0" />
-
-And that's all there is to it!
-
-If you're not satisfied with the millions of image variations that the
-program generates, additional variation in final image can be done by
-image rotation. Simply uncomment the following line in the program:
-// $identicon=imagerotate($identicon,$angle,$bg);
+Include the class.identicon.php file in your project
 
 
-* DONATIONS
+## USAGE
 
-If you find this program useful, please pass it along to your friends
-or donate any amount you feel will motivate the contributor/s to make
-the program better. Send your donations by following this link:
+The basic usage of this class is like this:
 
-https://sourceforge.net/donate/index.php?group_id=271757#blurb
+```
+
+$identicon = new Identicon('',256);
+echo $identicon->image();
+
+```
+
+which will output something an image tag like this:
+
+```
+
+<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQAAAAEACAIAAADTE (...) vn/wEcisrTmERAjwAAAABJRU5ErkJggg==">
+
+```
 
 
-* RELEASE HISTORY
+Have a look at the index.html
 
-1.0.1
-* Fixed bug where some hash values did not generate any sprites
+## TODO
 
-1.0.0
-* First production release
+* Implement a good way to be able to save the images on the server. Right now you can only output the base64-encoded image data
+
