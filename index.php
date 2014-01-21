@@ -12,7 +12,7 @@
 
         <?php
         if (isset($_GET['identicon_submit'])) {
-            $identicon = new Identicon($_GET['string'],$_GET['size']);
+            $identicon = new Identicon($_GET['string'],(int)$_GET['size']);
             
             
             // Randomly rotate elements when symmetry is not wanted
