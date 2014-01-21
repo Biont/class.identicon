@@ -37,12 +37,22 @@ The code can be used to generate unique identicons, avatars, and
 system-assigned images based on a user's e-mail address, user ID, etc.
 
 
+### New Features
+* Create images of any size by passing it in the constructor
+* Randomly rotate elements so that the output image is no longer rotation-independent. 
+(This is completely optional since it defeats the point of an identicon: The same string will no longer produce the exact same image twice.
+But it is a critical feeature for usage as an AR-Marker image)
+* Caching of image data
+
+
+
+
 ### Installation
 
 Include the class.identicon.php file in your project
 
 
-## Usage
+### Usage
 
 The basic usage of this class is like this:
 
@@ -67,4 +77,9 @@ Have a look at the index.html for an example implementation
 ### TODO
 
 * Implement a good way to be able to save the images on the server. Right now you can only output the base64-encoded image data
+* Pass html attributes to the image() method
+* Figure out why random rotation causes artifacts
+* Scale the sprite resolution with the image size
+* Customizable background color
+* Transparency
 
