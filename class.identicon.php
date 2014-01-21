@@ -1,27 +1,39 @@
 <?php
+
 /**
  * 
  */
 class Identicon {
 
-    public static $resolution = 512;
     public static $size = 256;
     public $string;
     public $random_rotation = false;
     private $image;  //Cache the image here (so you get the same image even when using random rotation)
+    private $resolution = 128;
 
 // <editor-fold defaultstate="collapsed" desc="Identicon public functions">
 
     /**
-     * Class constructor. Overrides the default values
+     * Class constructor. Overrides the default values and calculates the sprite resolution
      * 
      * @param string $string
      * @param int $size
      */
     public function __construct($string, $size) {
-        $this->string = md5($string);
-        $this->size = $size;
-        //TODO: Validation
+        if (is_string($string)) {
+            $this->string = md5($string);
+        } else {
+            error_log('Parameter $string is not a string. Aborting');
+            return;
+        }
+
+        if (is_int($size)) {
+            $this->size = $size;
+            $this->resolution = $size / 2;
+        } else {
+            error_log('Parameter $size is not an integer value');
+            return;
+        }
     }
 
     /**
@@ -36,6 +48,7 @@ class Identicon {
         imagepng($image);
         return 'data:image/png;base64,' . base64_encode(ob_get_clean());
     }
+
     /**
      * Calls the render method so that the class instance can be directly echo'ed
      * 
@@ -44,7 +57,7 @@ class Identicon {
     public function __toString() {
         return $this->render();
     }
-    
+
     /**
      * Outputs a fully working HTML image tag
      * 
@@ -54,12 +67,7 @@ class Identicon {
         return '<img src="' . $this->render() . '">';
     }
 
-
 // </editor-fold>
-
-    
-    
-    
 // <editor-fold defaultstate="collapsed" desc="Identicon private functions">
 
     /**
@@ -74,6 +82,7 @@ class Identicon {
             return 90;
         }
     }
+
     /**
      * Checks if an image was already created and cached and creates a new one if not
      * 
@@ -107,7 +116,7 @@ class Identicon {
             $angle = hexdec(substr($this->string, 18, 2));
 
             /* size of each sprite */
-            $spriteZ = self::$resolution;
+            $spriteZ = $this->resolution;
 
             /* start with blank 3x3 identicon */
             $identicon = imagecreatetruecolor($spriteZ * 3, $spriteZ * 3);
@@ -163,6 +172,7 @@ class Identicon {
         }
         return $this->image;
     }
+
     /**
      * 
      * Creates a single sprite
@@ -176,7 +186,7 @@ class Identicon {
      * @return type
      */
     private function get_sprite($shape, $R, $G, $B, $rotation) {
-        $spriteZ = self::$resolution;
+        $spriteZ = $this->resolution;
         $sprite = imagecreatetruecolor($spriteZ, $spriteZ);
         imageantialias($sprite, TRUE);
         $fg = imagecolorallocate($sprite, $R, $G, $B);
@@ -359,6 +369,7 @@ class Identicon {
             $sprite = imagerotate($sprite, 90, $bg);
         return $sprite;
     }
+
     /**
      * Generates the center sprite
      * 
@@ -374,7 +385,7 @@ class Identicon {
      * @return type
      */
     private function get_center($shape, $fR, $fG, $fB, $bR, $bG, $bB, $usebg) {
-        $spriteZ = self::$resolution;
+        $spriteZ = $this->resolution;
         $sprite = imagecreatetruecolor($spriteZ, $spriteZ);
         imageantialias($sprite, TRUE);
         $fg = imagecolorallocate($sprite, $fR, $fG, $fB);

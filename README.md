@@ -79,7 +79,6 @@ Have a look at the index.html for an example implementation
 * Implement a good way to be able to save the images on the server. Right now you can only output the base64-encoded image data
 * Pass html attributes to the image() method
 * Figure out why random rotation causes artifacts
-* Scale the sprite resolution with the image size
 * Customizable background color
 * Transparency
 
